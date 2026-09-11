@@ -1,0 +1,2 @@
+minimumReleaseAgeExclude:
+  - "@cardanvil/frame-kit@0.3.1"
