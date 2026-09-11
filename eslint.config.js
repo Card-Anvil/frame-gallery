@@ -21,6 +21,10 @@ export default defineConfig([
     },
     rules: {
       curly: ["error", "all"],
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
+      ],
     },
   },
   {

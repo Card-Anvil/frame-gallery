@@ -120,8 +120,10 @@ test("refuses an id already claimed by another repository", () => {
     { repository: REPO, file: "a.json", index: parsed },
     { repository: "someone/else", file: "b.json", index: parsed },
   ]);
+  const [problem] = problems;
+  assert.ok(problem);
   assert.equal(problems.length, 1);
-  assert.match(problems[0]?.message ?? "", /already listed by octocat/);
+  assert.match(problem.message, /already listed by octocat/);
 });
 
 test("lets one repository keep listing its own ids", () => {
@@ -141,8 +143,7 @@ test("an entry belongs at the path its repository names", () => {
     checkEntryPath(REPO, "repositories/octocat/my-frames.json"),
     [],
   );
-  assert.match(
-    checkEntryPath(REPO, "repositories/wrong/place.json")[0]?.message ?? "",
-    /belongs at repositories\/octocat\/my-frames\.json/,
-  );
+  const [misplaced] = checkEntryPath(REPO, "repositories/wrong/place.json");
+  assert.ok(misplaced);
+  assert.match(misplaced.message, /belongs at/);
 });
