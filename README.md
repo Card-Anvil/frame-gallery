@@ -46,6 +46,24 @@ Every rule exists to stop a listing that would fail in someone's app:
 | Every frame has a licence and an author           | People deserve to know what they are installing and under what terms |
 | The bundle is one the app will open               | Refusing at 512 MB here beats failing on someone's machine           |
 
+## How people see it
+
+In Card Anvil: the **frame button in the title bar**, then **Browse**. Your
+preview, name, description, version, licence and layouts come straight from your
+index, so what you write there is what people read.
+
+What the button under it does depends on where the app is running:
+
+- **Desktop** — one click. The app downloads your bundle, checks it against the
+  size and checksum your index gave, verifies every file inside it, and installs
+  it. It can also see that an installed frame is out of date and offer
+  **Update**, which is what the version in your manifest is for.
+- **Web** — a plain download link to your release, because a browser may
+  download a release asset but may not read its bytes. The file installs by drag
+  and drop, or by double-clicking it once the desktop app is installed.
+
+Either way the bytes come from your release; nothing is copied here.
+
 ## After you are listed
 
 Nothing. Release a new version and the gallery picks it up on its next refresh;
