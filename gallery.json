@@ -2,13 +2,20 @@
   "app": "card-anvil",
   "kind": "frame-gallery",
   "formatVersion": 1,
-  "generatedAt": "2026-09-11T00:25:09.549Z",
+  "generatedAt": "2026-09-11T22:48:03.994Z",
   "sources": [
+    {
+      "repository": "alex-taxiera/cardanvil-frames",
+      "state": "ok",
+      "indexUrl": "https://github.com/alex-taxiera/cardanvil-frames/releases/latest/download/frame-index.json",
+      "lastCheckedAt": "2026-09-11T22:48:03.994Z",
+      "consecutiveFailures": 0
+    },
     {
       "repository": "Card-Anvil/frame-template",
       "state": "ok",
       "indexUrl": "https://github.com/Card-Anvil/frame-template/releases/latest/download/frame-index.json",
-      "lastCheckedAt": "2026-09-11T00:25:09.549Z",
+      "lastCheckedAt": "2026-09-11T22:48:03.994Z",
       "consecutiveFailures": 0
     }
   ],
@@ -50,6 +57,44 @@
         "height": 816
       },
       "repository": "Card-Anvil/frame-template"
+    },
+    {
+      "id": "com.github.caalyx.expedition-33",
+      "slug": "expedition-33",
+      "name": "Expedition 33",
+      "description": "A custom frame inspired by Clair Obscur: Expedition 33",
+      "version": "0.1.0",
+      "tags": [
+        "Custom"
+      ],
+      "layouts": [
+        "normal"
+      ],
+      "canvas": {
+        "width": 3264,
+        "height": 4440
+      },
+      "author": {
+        "name": "Caalyx"
+      },
+      "license": "CC-BY-4.0",
+      "contractVersion": "1.1",
+      "assetCount": 13,
+      "bundle": {
+        "file": "expedition-33-0.1.0.cardframe",
+        "url": "https://github.com/alex-taxiera/cardanvil-frames/releases/download/v0.1.0/expedition-33-0.1.0.cardframe",
+        "bytes": 77073849,
+        "sha256": "1f649be9f2c1c7164fe6d1e0992139b07af6745541ec082081a5bdf94be8fbcb"
+      },
+      "preview": {
+        "file": "expedition-33-0.1.0.preview.png",
+        "url": "https://github.com/alex-taxiera/cardanvil-frames/releases/download/v0.1.0/expedition-33-0.1.0.preview.png",
+        "bytes": 21702244,
+        "sha256": "347da7a70fe7b38bbfcb8b50ac3caaa98df09fc62ee4f7087449e95ee27363b4",
+        "width": 2976,
+        "height": 4152
+      },
+      "repository": "alex-taxiera/cardanvil-frames"
     }
   ]
 }
