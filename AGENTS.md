@@ -61,6 +61,14 @@ build step.
   commit, four times a day, saying nothing.
 - **Aggregation re-runs the submission checks.** A repository can publish a
   release that breaks them after it was listed.
+- **Nothing is re-hosted, deliberately.** `gallery.json` carries URLs to the
+  author's own release for both the bundle and the preview. Re-hosting previews
+  here was considered and rejected: Card Anvil's `img-src` allows
+  `https://github.com` and `https://*.githubusercontent.com`, which already
+  covers the redirect a release download performs — including GitHub's past move
+  from `objects.` to `release-assets.githubusercontent.com`, which happened
+  inside that wildcard. Re-hosting would trade one line of CSP for repository
+  growth that git history never gives back.
 
 ## Commits
 
