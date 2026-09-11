@@ -1,0 +1,55 @@
+name: Refresh the gallery
+
+# What keeps `gallery.json` current. Card Anvil reads that file and nothing
+# else, so until this runs, a newly released frame is invisible.
+on:
+  schedule:
+    # Every six hours. A new release therefore takes up to that long to appear,
+    # which is the price of a committed index that any browser can read.
+    - cron: "17 */6 * * *"
+  push:
+    branches: [main]
+    paths:
+      - repositories/**
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: aggregate
+  cancel-in-progress: false
+
+jobs:
+  aggregate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: package.json
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Rebuild the gallery
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm run aggregate
+
+      - name: Commit it, if anything changed
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- gallery.json; then
+            echo "Nothing to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add gallery.json
+          git commit -m "chore: refresh the gallery"
+          git push

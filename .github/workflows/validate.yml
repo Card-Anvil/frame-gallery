@@ -1,0 +1,43 @@
+name: Validate
+
+# Deliberately `pull_request`, not `pull_request_target`: everything this does
+# is a public, unauthenticated GET, so it never needs a token and is safe to
+# run on a fork's code.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: package.json
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm run typecheck
+      - run: pnpm run lint
+      - run: pnpm run format:ci
+      - run: pnpm run test
+
+      # Last, because it is the only step that reaches the network — a broken
+      # rule should fail before a slow fetch does.
+      - name: Check every listed repository
+        env:
+          # Lifts the rate limit on the fallback that asks which release
+          # carries an index. Read-only, and absent on a fork, where the
+          # unauthenticated path still works.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm run validate
