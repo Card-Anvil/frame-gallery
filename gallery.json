@@ -2,20 +2,20 @@
   "app": "card-anvil",
   "kind": "frame-gallery",
   "formatVersion": 1,
-  "generatedAt": "2026-09-11T22:48:03.994Z",
+  "generatedAt": "2026-09-12T15:32:38.003Z",
   "sources": [
     {
       "repository": "alex-taxiera/cardanvil-frames",
       "state": "ok",
       "indexUrl": "https://github.com/alex-taxiera/cardanvil-frames/releases/latest/download/frame-index.json",
-      "lastCheckedAt": "2026-09-11T22:48:03.994Z",
+      "lastCheckedAt": "2026-09-12T15:32:38.003Z",
       "consecutiveFailures": 0
     },
     {
       "repository": "Card-Anvil/frame-template",
       "state": "ok",
       "indexUrl": "https://github.com/Card-Anvil/frame-template/releases/latest/download/frame-index.json",
-      "lastCheckedAt": "2026-09-11T22:48:03.994Z",
+      "lastCheckedAt": "2026-09-12T15:32:38.003Z",
       "consecutiveFailures": 0
     }
   ],
@@ -62,8 +62,8 @@
       "id": "com.github.caalyx.expedition-33",
       "slug": "expedition-33",
       "name": "Expedition 33",
-      "description": "A custom frame inspired by Clair Obscur: Expedition 33",
-      "version": "0.1.0",
+      "description": "A custom frame inspired by Clair Obscur: Expedition 33. Assets made by TorskeRavn.",
+      "version": "0.1.1",
       "tags": [
         "Custom"
       ],
@@ -81,14 +81,14 @@
       "contractVersion": "1.1",
       "assetCount": 13,
       "bundle": {
-        "file": "expedition-33-0.1.0.cardframe",
-        "url": "https://github.com/alex-taxiera/cardanvil-frames/releases/download/v0.1.0/expedition-33-0.1.0.cardframe",
-        "bytes": 77073849,
-        "sha256": "1f649be9f2c1c7164fe6d1e0992139b07af6745541ec082081a5bdf94be8fbcb"
+        "file": "expedition-33-0.1.1.cardframe",
+        "url": "https://github.com/alex-taxiera/cardanvil-frames/releases/download/v0.1.1/expedition-33-0.1.1.cardframe",
+        "bytes": 77073872,
+        "sha256": "0a5eba0e73cdb75b0878fbffe33fe2fddec3f36a1f7e4e7b73e63f923c3a49ae"
       },
       "preview": {
-        "file": "expedition-33-0.1.0.preview.png",
-        "url": "https://github.com/alex-taxiera/cardanvil-frames/releases/download/v0.1.0/expedition-33-0.1.0.preview.png",
+        "file": "expedition-33-0.1.1.preview.png",
+        "url": "https://github.com/alex-taxiera/cardanvil-frames/releases/download/v0.1.1/expedition-33-0.1.1.preview.png",
         "bytes": 21702244,
         "sha256": "347da7a70fe7b38bbfcb8b50ac3caaa98df09fc62ee4f7087449e95ee27363b4",
         "width": 2976,
