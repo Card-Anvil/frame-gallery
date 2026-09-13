@@ -2,20 +2,27 @@
   "app": "card-anvil",
   "kind": "frame-gallery",
   "formatVersion": 1,
-  "generatedAt": "2026-09-12T15:32:38.003Z",
+  "generatedAt": "2026-09-13T02:32:54.005Z",
   "sources": [
     {
       "repository": "alex-taxiera/cardanvil-frames",
       "state": "ok",
       "indexUrl": "https://github.com/alex-taxiera/cardanvil-frames/releases/latest/download/frame-index.json",
-      "lastCheckedAt": "2026-09-12T15:32:38.003Z",
+      "lastCheckedAt": "2026-09-13T02:32:54.005Z",
+      "consecutiveFailures": 0
+    },
+    {
+      "repository": "AModSoul/cardanvil-frames-amodsoul",
+      "state": "ok",
+      "indexUrl": "https://github.com/AModSoul/cardanvil-frames-amodsoul/releases/latest/download/frame-index.json",
+      "lastCheckedAt": "2026-09-13T02:32:54.005Z",
       "consecutiveFailures": 0
     },
     {
       "repository": "Card-Anvil/frame-template",
       "state": "ok",
       "indexUrl": "https://github.com/Card-Anvil/frame-template/releases/latest/download/frame-index.json",
-      "lastCheckedAt": "2026-09-12T15:32:38.003Z",
+      "lastCheckedAt": "2026-09-13T02:32:54.005Z",
       "consecutiveFailures": 0
     }
   ],
@@ -95,6 +102,44 @@
         "height": 4152
       },
       "repository": "alex-taxiera/cardanvil-frames"
+    },
+    {
+      "id": "com.github.card-anvil.dragon-hoard",
+      "slug": "dragon-hoard",
+      "name": "Dragon Hoard",
+      "description": "Dragon Hoard Showcase frame from HOB.",
+      "version": "0.1.0",
+      "tags": [
+        "Showcase"
+      ],
+      "layouts": [
+        "normal"
+      ],
+      "canvas": {
+        "width": 3264,
+        "height": 4440
+      },
+      "author": {
+        "name": "AModSoul"
+      },
+      "license": "CC-BY-4.0",
+      "contractVersion": "1.2",
+      "assetCount": 18,
+      "bundle": {
+        "file": "dragon-hoard-0.1.0.cardframe",
+        "url": "https://github.com/AModSoul/cardanvil-frames-amodsoul/releases/download/v0.1.0/dragon-hoard-0.1.0.cardframe",
+        "bytes": 111196389,
+        "sha256": "16a201666cb58e152fa76d025a24516a760de07819593c679d59b70ad6059fdf"
+      },
+      "preview": {
+        "file": "dragon-hoard-0.1.0.preview.png",
+        "url": "https://github.com/AModSoul/cardanvil-frames-amodsoul/releases/download/v0.1.0/dragon-hoard-0.1.0.preview.png",
+        "bytes": 810249,
+        "sha256": "2ae8c2790169f3b011a40e3d82c8fc0d315f6c1dc080ff1b75f7aab68402bcbe",
+        "width": 600,
+        "height": 816
+      },
+      "repository": "AModSoul/cardanvil-frames-amodsoul"
     }
   ]
 }
