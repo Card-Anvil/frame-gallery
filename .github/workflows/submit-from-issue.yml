@@ -1,0 +1,176 @@
+name: Open a listing pull request
+
+# What turns a "List my frames" issue into the pull request it asks for, so a
+# submitter never has to fork this repository. A maintainer runs it by hand —
+# `workflow_dispatch` is already restricted to people with write access, which
+# is the whole of the access control this needs.
+#
+# See "Listing from an issue" in AGENTS.md for the app this needs.
+on:
+  workflow_dispatch:
+    inputs:
+      issue:
+        description: The listing issue number, e.g. 42
+        required: true
+        type: string
+
+# Everything this writes goes through the app token below, not through
+# GITHUB_TOKEN, so the default token needs nothing.
+permissions:
+  contents: read
+
+concurrency:
+  group: submit-from-issue-${{ inputs.issue }}
+  cancel-in-progress: false
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check the listing app is configured
+        env:
+          CLIENT_ID: ${{ vars.LISTING_APP_CLIENT_ID }}
+          PRIVATE_KEY: ${{ secrets.LISTING_APP_PRIVATE_KEY }}
+        run: |
+          set -euo pipefail
+          missing=""
+          [ -z "$CLIENT_ID" ] && missing="${missing}the LISTING_APP_CLIENT_ID variable "
+          [ -z "$PRIVATE_KEY" ] && missing="${missing}the LISTING_APP_PRIVATE_KEY secret "
+          if [ -n "$missing" ]; then
+            echo "::error::Missing ${missing}— see 'Listing from an issue' in AGENTS.md. The client id is a variable, not a secret." >&2
+            exit 1
+          fi
+
+      # An identity of its own, rather than the default GITHUB_TOKEN: a pull
+      # request opened with that token starts no other workflows, so Validate
+      # would never run on it — and a listing pull request nobody has checked
+      # is the one thing this must not produce.
+      #
+      # A GitHub App rather than a personal token because nothing about it
+      # expires, it belongs to the organisation rather than to a person, and
+      # installing it is the grant. The token minted here lives about an hour
+      # and reaches only this repository.
+      - uses: actions/create-github-app-token@v3
+        id: app-token
+        with:
+          client-id: ${{ vars.LISTING_APP_CLIENT_ID }}
+          private-key: ${{ secrets.LISTING_APP_PRIVATE_KEY }}
+          # Narrower than the app may hold, so this workflow states what it
+          # actually needs and stays least-privilege if the app ever gains more.
+          permission-contents: write
+          permission-pull-requests: write
+          permission-issues: write
+
+      - uses: actions/checkout@v5
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: package.json
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # Straight to a file, never through a step output: an issue body is
+      # whatever a stranger typed, and one carrying the heredoc delimiter would
+      # forge the outputs every later step trusts. Reading it — including
+      # whether the issue is still open — is `submit`'s job, where it is tested.
+      - name: Read the issue
+        id: issue
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          ISSUE: ${{ inputs.issue }}
+        run: |
+          set -euo pipefail
+          gh issue view "$ISSUE" --repo "$GITHUB_REPOSITORY" \
+            --json body,author,state > issue.json
+
+      - name: Write the entry
+        id: entry
+        env:
+          ISSUE_NUMBER: ${{ inputs.issue }}
+          ISSUE_FILE: issue.json
+        run: pnpm run submit
+
+      - name: Open the pull request
+        id: pr
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          APP_SLUG: ${{ steps.app-token.outputs.app-slug }}
+          ISSUE: ${{ inputs.issue }}
+          REPOSITORY: ${{ steps.entry.outputs.repository }}
+          FILE: ${{ steps.entry.outputs.file }}
+          BRANCH: ${{ steps.entry.outputs.branch }}
+          AUTHOR: ${{ steps.entry.outputs.author }}
+        run: |
+          set -euo pipefail
+
+          # The branch is named after the repository rather than the issue, so
+          # two issues for one repository collide here instead of racing to
+          # list it twice. Never forced: that branch may be carrying fixes a
+          # maintainer pushed to the open pull request.
+          if git ls-remote --exit-code --heads origin "$BRANCH" >/dev/null 2>&1; then
+            echo "::error::$BRANCH already exists — $REPOSITORY is already being listed. Look at the open pull requests." >&2
+            exit 1
+          fi
+
+          # Attribute the commit to the listing app rather than to
+          # github-actions[bot], so it is obvious what made it. The numeric id
+          # is what links the address to the bot account.
+          bot_id="$(gh api "/users/${APP_SLUG}[bot]" --jq .id)"
+          git config user.name "${APP_SLUG}[bot]"
+          git config user.email "${bot_id}+${APP_SLUG}[bot]@users.noreply.github.com"
+          git switch -c "$BRANCH"
+          git add "$FILE"
+          git commit -m "feat: list $REPOSITORY"
+          if ! git push --set-upstream origin "$BRANCH"; then
+            echo "::error::Could not push $BRANCH. Check the listing app is installed on this repository with Contents: write." >&2
+            exit 1
+          fi
+
+          # Through a file, never into the script body: the repository name
+          # came out of an issue, and pasting it into `run:` is an injection
+          # hole. `Closes` so merging this closes the issue; `submittedBy` in
+          # the entry is what credits the submitter in the gallery itself.
+          {
+            printf 'Listing [`%s`](https://github.com/%s), submitted by @%s in #%s and opened from that issue, so there was nothing to fork.\n\n' \
+              "$REPOSITORY" "$REPOSITORY" "$AUTHOR" "$ISSUE"
+            printf 'Adds `%s` and nothing else — everything the gallery shows comes from the release in that repository.\n\n' "$FILE"
+            printf 'Closes #%s\n' "$ISSUE"
+          } > "$RUNNER_TEMP/pr-body.md"
+
+          if ! url=$(gh pr create \
+            --repo "$GITHUB_REPOSITORY" \
+            --base main \
+            --head "$BRANCH" \
+            --title "List $REPOSITORY" \
+            --body-file "$RUNNER_TEMP/pr-body.md"); then
+            echo "::error::Pushed $BRANCH but could not open the pull request. 'Resource not accessible' means the listing app is missing Pull requests: write." >&2
+            exit 1
+          fi
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "Opened $url" >> "$GITHUB_STEP_SUMMARY"
+
+      # Whatever happened, the person waiting on the issue hears about it.
+      - name: Say so on the issue
+        if: always() && steps.issue.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          ISSUE: ${{ inputs.issue }}
+          URL: ${{ steps.pr.outputs.url }}
+          PROBLEM: ${{ steps.entry.outputs.problem }}
+          RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          if [ -n "${URL:-}" ]; then
+            body="Opened $URL for this. Its checks say what your submission would list, and merging it closes this issue."
+          elif [ -n "${PROBLEM:-}" ]; then
+            body="A maintainer tried to open the pull request for this, and it could not be written: $PROBLEM"$'\n\n'"Editing this issue and asking a maintainer to run it again is enough."
+          else
+            body="A maintainer tried to open the pull request for this and the run failed — [what went wrong]($RUN). Nothing is wrong on your side; we will follow up here."
+          fi
+          gh issue comment "$ISSUE" --repo "$GITHUB_REPOSITORY" --body "$body"

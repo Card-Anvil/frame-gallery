@@ -13,6 +13,7 @@
     "validate": "node --experimental-strip-types scripts/validate.ts",
     "aggregate": "node --experimental-strip-types scripts/aggregate.ts",
     "schema": "node --experimental-strip-types scripts/schema.ts",
+    "submit": "node --experimental-strip-types scripts/submit.ts",
     "test": "node --experimental-strip-types --test scripts/*.test.ts",
     "typecheck": "tsc -b",
     "lint": "eslint .",

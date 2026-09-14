@@ -1,3 +1,6 @@
 node_modules/
 *.tsbuildinfo
 .DS_Store
+# What the listing workflow fetches with `gh issue view`, and what
+# `pnpm submit` reads. Never part of a submission.
+issue.json
