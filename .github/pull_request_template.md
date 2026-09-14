@@ -1,6 +1,6 @@
 ## Listing
 
-<!-- Which repository are you adding? e.g. octocat/my-frames -->
+<!-- Link to the repository you are adding, e.g. https://github.com/octocat/my-frames -->
 
 Repository:
 
@@ -13,3 +13,6 @@ Repository:
 
 CI will check all of this and comment what your submission would list — you do
 not need to be sure before opening the pull request.
+
+Would rather not fork? [Open a listing issue](https://github.com/Card-Anvil/frame-gallery/issues/new/choose) instead and
+a maintainer opens this pull request for you.

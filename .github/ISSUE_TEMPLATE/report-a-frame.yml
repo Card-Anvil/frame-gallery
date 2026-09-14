@@ -5,8 +5,8 @@ body:
   - type: input
     id: repository
     attributes:
-      label: Which repository
-      placeholder: octocat/my-frames
+      label: Link to the repository
+      placeholder: https://github.com/octocat/my-frames
     validations:
       required: true
   - type: textarea
