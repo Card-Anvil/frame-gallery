@@ -19,14 +19,15 @@ Card Anvil reads.
 
 ## Commands
 
-| Task                   | Command                     |
-| ---------------------- | --------------------------- |
-| Install                | `pnpm install`              |
-| Check every listing    | `pnpm validate`             |
-| Rebuild `gallery.json` | `pnpm aggregate`            |
-| Test                   | `pnpm test`                 |
-| Typecheck              | `pnpm typecheck`            |
-| Lint / format          | `pnpm lint` / `pnpm format` |
+| Task                         | Command                     |
+| ---------------------------- | --------------------------- |
+| Install                      | `pnpm install`              |
+| Check every listing          | `pnpm validate`             |
+| Rebuild `gallery.json`       | `pnpm aggregate`            |
+| Write an entry from an issue | `pnpm submit`               |
+| Test                         | `pnpm test`                 |
+| Typecheck                    | `pnpm typecheck`            |
+| Lint / format                | `pnpm lint` / `pnpm format` |
 
 Node 24+, pnpm. Scripts are TypeScript run through Node's type stripping — no
 build step.
@@ -45,6 +46,35 @@ build step.
 - **Parse indexes with `@cardanvil/frame-kit`'s own schema**, never a local
   re-declaration. It imports Vite dynamically, so it works in plain Node.
 - `gallery.json` is **generated**. Never hand-edit it; run `pnpm aggregate`.
+
+## Listing from an issue
+
+A submitter may either open the pull request themselves or
+[open a listing issue](.github/ISSUE_TEMPLATE/list-my-frames.yml) and let a
+maintainer do it: **Actions → Open a listing pull request → Run workflow**, with
+the issue number. It reads the issue, writes the entry, opens the pull request
+and says so on the issue. `workflow_dispatch` already requires write access, so
+that is the whole of the access control.
+
+The reading is `scripts/issue.ts` — pure, tested, and the only thing that
+interprets what a submitter typed. The workflow supplies the issue and runs git
+and `gh`; it parses nothing itself.
+
+It opens the pull request as a **GitHub App**, which needs two settings on this
+repository:
+
+| Name                      | Kind     | Value                                          |
+| ------------------------- | -------- | ---------------------------------------------- |
+| `LISTING_APP_CLIENT_ID`   | variable | The app's client id, which is not secret       |
+| `LISTING_APP_PRIVATE_KEY` | secret   | The whole `.pem`, `BEGIN`/`END` lines included |
+
+The app needs **Contents: write**, **Pull requests: write** and **Issues:
+write**, and to be installed here. It can be the same app the frames repository
+releases with — installing it here and copying the two settings over is the
+whole of it. Not `GITHUB_TOKEN`: a pull request opened with that token starts no
+other workflow, so Validate would never run on it, and a listing nobody checked
+is exactly what must not be merged. Not a personal token either — that expires,
+belongs to a person, and needs the organisation to approve it.
 
 ## Things that are easy to get wrong
 

@@ -14,20 +14,27 @@ them, you update them, and deleting your release removes them from the gallery.
    **Actions → Release frames → Run workflow**. It builds a `.cardframe` per
    frame plus a `frame-index.json` describing the set, which is the file this
    gallery reads.
-2. **Add one file** at `repositories/<your-owner>/<your-repo>.json`, lower case:
+2. **Ask to be listed.** Either way works, and both end in the same pull
+   request:
 
-   ```json
-   {
-     "$schema": "../../schema/gallery-entry.schema.json",
-     "repository": "octocat/my-frames",
-     "submittedBy": "octocat",
-     "addedAt": "2026-09-11"
-   }
-   ```
+   - **[Open a listing issue](../../issues/new/choose)** with a link to your
+     repository. A maintainer runs an action that opens the pull request for
+     you, crediting you. Nothing to fork, nothing to write.
+   - **Or open the pull request yourself**, adding one file at
+     `repositories/<your-owner>/<your-repo>.json`, lower case:
 
-3. **Open a pull request.** CI checks your release and comments what it would
-   list. Once it is merged, the gallery refreshes and your frames appear in the
-   app within a few hours.
+     ```json
+     {
+       "$schema": "../../schema/gallery-entry.schema.json",
+       "repository": "octocat/my-frames",
+       "submittedBy": "octocat",
+       "addedAt": "2026-09-11"
+     }
+     ```
+
+3. **Wait for the checks.** CI reads your release and comments what your
+   submission would list. Once the pull request is merged, the gallery
+   refreshes and your frames appear in the app within a few hours.
 
 That is the whole submission. You never edit `gallery.json` — it is generated.
 
