@@ -100,6 +100,16 @@ belongs to a person, and needs the organisation to approve it.
   inside that wildcard. Re-hosting would trade one line of CSP for repository
   growth that git history never gives back.
 
+## Before you commit
+
+`pnpm install` installs a husky pre-commit hook that runs what the `validate` workflow runs, minus
+two steps: lint-staged fixes and formats the staged files, then `pnpm typecheck`. The tests and
+`pnpm validate` stay on the PR — `validate` fetches every listed repository, and a commit should
+not need the network.
+
+To commit past it — a work-in-progress commit on a branch, say — use `git commit --no-verify`.
+CI still has the final word.
+
 ## Commits
 
 [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).

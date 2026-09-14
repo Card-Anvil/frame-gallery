@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+cd "$(git rev-parse --show-toplevel)" || exit 1
+
+# Ensure node is on PATH (Cursor/IDE git often doesn't load shell profile)
+if ! command -v node >/dev/null 2>&1; then
+  export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  [ -s "$HOME/.local/share/fnm/fnm.sh" ] && \. "$HOME/.local/share/fnm/fnm.sh"
+  export PATH="${VOLTA_HOME:-$HOME/.volta}/bin:$PATH"
+fi
+
+# The checks the validate workflow runs, minus the two that do not belong on a
+# commit: the tests, and `pnpm validate`, which fetches every listed repository
+# over the network. Both stay on the PR.
+set -e
+
+# Lint and format, but only what is being committed.
+./node_modules/.bin/lint-staged
+
+pnpm typecheck
