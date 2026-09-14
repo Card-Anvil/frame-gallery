@@ -1,0 +1,31 @@
+name: List my frames
+description: Add your frame repository to the gallery without forking it.
+title: "List: "
+labels: ["listing"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A maintainer turns this issue into the pull request for you, so there is
+        nothing to fork and no file to write. If you would rather open the pull
+        request yourself, the [README](https://github.com/Card-Anvil/frame-gallery#listing-your-frames)
+        says how — the result is the same either way.
+  - type: input
+    id: repository
+    attributes:
+      label: Link to your repository
+      description: The repository whose release carries `frame-index.json`.
+      placeholder: https://github.com/octocat/my-frames
+    validations:
+      required: true
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      description: |
+        CI will check all of this and comment what your submission would list —
+        you do not need to be sure before opening this issue.
+      options:
+        - label: My repository has a published release containing `frame-index.json`
+        - label: Every frame has a licence I have the right to publish under
+        - label: Every frame id is reverse-DNS under a namespace I control

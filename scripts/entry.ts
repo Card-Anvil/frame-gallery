@@ -2,6 +2,10 @@ import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { z } from "zod";
 
+/** What GitHub allows in an `owner/name`, and so what an entry may name. */
+export const REPOSITORY_PATTERN =
+  /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})\/[A-Za-z0-9._-]{1,100}$/;
+
 /**
  * A submission.
  *
@@ -15,11 +19,8 @@ export const EntrySchema = z.object({
   /** `owner/name` on GitHub. */
   repository: z
     .string()
-    .regex(
-      /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})\/[A-Za-z0-9._-]{1,100}$/,
-      "must be owner/name, e.g. octocat/my-frames",
-    ),
-  /** Who opened the pull request, for a maintainer to follow up with. */
+    .regex(REPOSITORY_PATTERN, "must be owner/name, e.g. octocat/my-frames"),
+  /** Who submitted it, for a maintainer to follow up with. */
   submittedBy: z.string().min(1),
   /** ISO date the entry was added. */
   addedAt: z.iso.date(),
