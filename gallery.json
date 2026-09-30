@@ -2,27 +2,27 @@
   "app": "card-anvil",
   "kind": "frame-gallery",
   "formatVersion": 1,
-  "generatedAt": "2026-09-13T02:32:54.005Z",
+  "generatedAt": "2026-09-30T00:14:19.070Z",
   "sources": [
     {
       "repository": "alex-taxiera/cardanvil-frames",
       "state": "ok",
       "indexUrl": "https://github.com/alex-taxiera/cardanvil-frames/releases/latest/download/frame-index.json",
-      "lastCheckedAt": "2026-09-13T02:32:54.005Z",
+      "lastCheckedAt": "2026-09-30T00:14:19.070Z",
       "consecutiveFailures": 0
     },
     {
       "repository": "AModSoul/cardanvil-frames-amodsoul",
       "state": "ok",
       "indexUrl": "https://github.com/AModSoul/cardanvil-frames-amodsoul/releases/latest/download/frame-index.json",
-      "lastCheckedAt": "2026-09-13T02:32:54.005Z",
+      "lastCheckedAt": "2026-09-30T00:14:19.070Z",
       "consecutiveFailures": 0
     },
     {
       "repository": "Card-Anvil/frame-template",
       "state": "ok",
       "indexUrl": "https://github.com/Card-Anvil/frame-template/releases/latest/download/frame-index.json",
-      "lastCheckedAt": "2026-09-13T02:32:54.005Z",
+      "lastCheckedAt": "2026-09-30T00:14:19.070Z",
       "consecutiveFailures": 0
     }
   ],
@@ -64,6 +64,44 @@
         "height": 816
       },
       "repository": "Card-Anvil/frame-template"
+    },
+    {
+      "id": "com.github.amodsoul.sculptor-s-stronghold",
+      "slug": "sculptor-s-stronghold",
+      "name": "Sculptor's Stronghold",
+      "description": "Sculptor's Stronghold frame from FRA.",
+      "version": "1.0.0",
+      "tags": [
+        "Custom"
+      ],
+      "layouts": [
+        "normal"
+      ],
+      "canvas": {
+        "width": 3264,
+        "height": 4440
+      },
+      "author": {
+        "name": "AModSoul"
+      },
+      "license": "CC-BY-4.0",
+      "contractVersion": "1.2",
+      "assetCount": 17,
+      "bundle": {
+        "file": "sculptor-s-stronghold-1.0.0.cardframe",
+        "url": "https://github.com/AModSoul/cardanvil-frames-amodsoul/releases/download/v1.0.0/sculptor-s-stronghold-1.0.0.cardframe",
+        "bytes": 94518566,
+        "sha256": "065661a0046068eed54d0400e35f926965dde5ccbffa70ee9b1b59443dd4af38"
+      },
+      "preview": {
+        "file": "sculptor-s-stronghold-1.0.0.preview.png",
+        "url": "https://github.com/AModSoul/cardanvil-frames-amodsoul/releases/download/v1.0.0/sculptor-s-stronghold-1.0.0.preview.png",
+        "bytes": 835623,
+        "sha256": "b9d4eab3cf868f13348b692757acb8c7e4e31dff259efa952165c1ca9dcd0c60",
+        "width": 600,
+        "height": 816
+      },
+      "repository": "AModSoul/cardanvil-frames-amodsoul"
     },
     {
       "id": "com.github.caalyx.expedition-33",
@@ -108,7 +146,7 @@
       "slug": "dragon-hoard",
       "name": "Dragon Hoard",
       "description": "Dragon Hoard Showcase frame from HOB.",
-      "version": "0.1.0",
+      "version": "1.0.0",
       "tags": [
         "Showcase"
       ],
@@ -126,14 +164,14 @@
       "contractVersion": "1.2",
       "assetCount": 18,
       "bundle": {
-        "file": "dragon-hoard-0.1.0.cardframe",
-        "url": "https://github.com/AModSoul/cardanvil-frames-amodsoul/releases/download/v0.1.0/dragon-hoard-0.1.0.cardframe",
+        "file": "dragon-hoard-1.0.0.cardframe",
+        "url": "https://github.com/AModSoul/cardanvil-frames-amodsoul/releases/download/v1.0.0/dragon-hoard-1.0.0.cardframe",
         "bytes": 111196389,
-        "sha256": "16a201666cb58e152fa76d025a24516a760de07819593c679d59b70ad6059fdf"
+        "sha256": "2e9cf75d0f00e270cdcbb6c1d633c2114ca6e43ea5f3b5268d60169c2f78347f"
       },
       "preview": {
-        "file": "dragon-hoard-0.1.0.preview.png",
-        "url": "https://github.com/AModSoul/cardanvil-frames-amodsoul/releases/download/v0.1.0/dragon-hoard-0.1.0.preview.png",
+        "file": "dragon-hoard-1.0.0.preview.png",
+        "url": "https://github.com/AModSoul/cardanvil-frames-amodsoul/releases/download/v1.0.0/dragon-hoard-1.0.0.preview.png",
         "bytes": 810249,
         "sha256": "2ae8c2790169f3b011a40e3d82c8fc0d315f6c1dc080ff1b75f7aab68402bcbe",
         "width": 600,
